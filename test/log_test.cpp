@@ -97,6 +97,4 @@ int main(int argc, char **argv) {
     log::getInstance()->init("./log", ".testlog", 0);
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
-
-
 }

@@ -18,3 +18,9 @@ set(LOG_SOURCE_FILES ../../code/log/log.cpp ../../code/log/blockqueue.h log_test
 add_executable(LogTest ${LOG_SOURCE_FILES})   
 target_include_directories(LogTest PUBLIC ${PROJECT_SOURCE_DIR}../code/log)
 target_link_libraries(LogTest ${GTEST_LIBRARIES} pthread)
+
+#timer_test
+set(TIMER_SOURCE_FILES ../../code/timer/heaptimer.cpp heap_timer_test.cpp ../../code/log/log.cpp)
+add_executable(TimerTest ${TIMER_SOURCE_FILES}) 
+target_include_directories(TimerTest PUBLIC ${PROJECT_SOURCE_DIR}../code/log ${PROJECT_SOURCE_DIR}../code/timer)
+target_link_libraries(TimerTest ${GTEST_LIBRARIES} pthread) 

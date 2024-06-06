@@ -46,7 +46,15 @@ void log::asyncWrite(){
     std::string str = "";
     /*  BUG:    使用!empty()作为判断
                 直接退出while循环了...   
-        TODO:   但我这里会空转...*/
+        TODO:   但我这里会空转...
+
+        NOTE:   这里不用pop来判断, 是由于下面这种情况
+                在日志刚好分页时, 如果pop了一个, 然后这时候失去锁,
+                触发了clear_deque_to_file, 那这个pop的一个将无法
+                按照正确顺序记录在原日志中  
+                
+                也就是我为了日志的完整性放弃了性能？*/
+        
     while (!deque->is_close()){
         std::lock_guard<std::mutex> locker(mtx);
         if (!deque->empty()){
