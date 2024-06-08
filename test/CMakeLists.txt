@@ -30,3 +30,9 @@ set(SQL_POOL_SOURCE_FILES ../../code/log/log.cpp ../../code/pool/sqlconnpool.cpp
 add_executable(SqlPoolTest ${SQL_POOL_SOURCE_FILES})
 target_include_directories(SqlPoolTest PUBLIC ${PROJECT_SOURCE_DIR}../code/log ${PROJECT_SOURCE_DIR}../code/pool)
 target_link_libraries(SqlPoolTest ${GTEST_LIBRARIES} pthread mysqlclient) 
+
+#thread_pool_test
+set(THREAD_POOL_SOURCE_FILES ../../code/log/log.cpp ../../code/pool/threadpool.h thread_pool_test.cpp)
+add_executable(ThreadPoolTest ${THREAD_POOL_SOURCE_FILES})  
+target_include_directories(ThreadPoolTest PUBLIC ${PROJECT_SOURCE_DIR}../code/log ${PROJECT_SOURCE_DIR}../code/pool)
+target_link_libraries(ThreadPoolTest ${GTEST_LIBRARIES} pthread)
