@@ -24,3 +24,9 @@ set(TIMER_SOURCE_FILES ../../code/timer/heaptimer.cpp heap_timer_test.cpp ../../
 add_executable(TimerTest ${TIMER_SOURCE_FILES}) 
 target_include_directories(TimerTest PUBLIC ${PROJECT_SOURCE_DIR}../code/log ${PROJECT_SOURCE_DIR}../code/timer)
 target_link_libraries(TimerTest ${GTEST_LIBRARIES} pthread) 
+
+#sql_pool_test
+set(SQL_POOL_SOURCE_FILES ../../code/log/log.cpp ../../code/pool/sqlconnpool.cpp   sql_pool_test.cpp)
+add_executable(SqlPoolTest ${SQL_POOL_SOURCE_FILES})
+target_include_directories(SqlPoolTest PUBLIC ${PROJECT_SOURCE_DIR}../code/log ${PROJECT_SOURCE_DIR}../code/pool)
+target_link_libraries(SqlPoolTest ${GTEST_LIBRARIES} pthread mysqlclient) 
