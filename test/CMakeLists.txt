@@ -36,3 +36,19 @@ set(THREAD_POOL_SOURCE_FILES ../../code/log/log.cpp ../../code/pool/threadpool.h
 add_executable(ThreadPoolTest ${THREAD_POOL_SOURCE_FILES})  
 target_include_directories(ThreadPoolTest PUBLIC ${PROJECT_SOURCE_DIR}../code/log ${PROJECT_SOURCE_DIR}../code/pool)
 target_link_libraries(ThreadPoolTest ${GTEST_LIBRARIES} pthread)
+
+#buffer_test
+set(BUFFER_SOURCE_FILES ../../code/buffer/buffer.cpp buffer_test.cpp)
+add_executable(BufferTest ${BUFFER_SOURCE_FILES})
+target_include_directories(BufferTest PUBLIC ${PROJECT_SOURCE_DIR}../code/buffer)
+target_link_libraries(BufferTest ${GTEST_LIBRARIES})
+
+#http_request_test
+set(HTTP_REQUEST_SOURCE_FILES   ../../code/http/httprequest.cpp
+                                ../../code/buffer/buffer.cpp
+                                ../../code/log/log.cpp
+                                ../../code/pool/sqlconnpool.cpp
+                                httprequest_test.cpp )
+add_executable(HttpRequestTest ${HTTP_REQUEST_SOURCE_FILES})
+target_include_directories(HttpRequestTest PUBLIC ${PROJECT_SOURCE_DIR}../code)
+target_link_libraries(HttpRequestTest ${GTEST_LIBRARIES} pthread mysqlclient)
