@@ -52,3 +52,12 @@ set(HTTP_REQUEST_SOURCE_FILES   ../../code/http/httprequest.cpp
 add_executable(HttpRequestTest ${HTTP_REQUEST_SOURCE_FILES})
 target_include_directories(HttpRequestTest PUBLIC ${PROJECT_SOURCE_DIR}../code)
 target_link_libraries(HttpRequestTest ${GTEST_LIBRARIES} pthread mysqlclient)
+
+#http_response_test
+set(HTTP_RESPONSE_SOURCE_FILES   ../../code/http/httpresponse.cpp
+                                ../../code/buffer/buffer.cpp
+                                ../../code/log/log.cpp
+                                httpresponse_test.cpp )
+add_executable(HttpResponseTest ${HTTP_RESPONSE_SOURCE_FILES})
+target_include_directories(HttpResponseTest PUBLIC ${PROJECT_SOURCE_DIR}../code)
+target_link_libraries(HttpResponseTest ${GTEST_LIBRARIES} pthread)
