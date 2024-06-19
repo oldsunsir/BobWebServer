@@ -63,6 +63,12 @@ void http_response::init(const std::string& src_dir, const std::string& path,
     mm_file_stat = {0};
 }
 
+void http_response::unmapFile(){
+    if (mm_file){
+        munmap(mm_file, mm_file_stat.st_size);
+        mm_file = nullptr;
+    }
+}
 void http_response::makeResponse(buffer& buff){
     if (stat((_src_dir + _path).data(), &mm_file_stat) < 0)
         _code = 404;

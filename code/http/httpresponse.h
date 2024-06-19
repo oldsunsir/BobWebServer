@@ -16,6 +16,9 @@ public:
     void init(const std::string& src_dir, const std::string& path,
                 bool is_keep_alive = false, int code = -1);
     void makeResponse(buffer& buff);
+    /*NOTE: 用来close连接时取消映射*/
+    void unmapFile();
+
     void addErrorContent(buffer& buff, const std::string& message);
     char* file() const{
         return mm_file;
