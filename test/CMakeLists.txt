@@ -61,3 +61,15 @@ set(HTTP_RESPONSE_SOURCE_FILES   ../../code/http/httpresponse.cpp
 add_executable(HttpResponseTest ${HTTP_RESPONSE_SOURCE_FILES})
 target_include_directories(HttpResponseTest PUBLIC ${PROJECT_SOURCE_DIR}../code)
 target_link_libraries(HttpResponseTest ${GTEST_LIBRARIES} pthread)
+
+#http_conn_server
+set(HTTP_CONN_SERVER_SOURCE_FILES ../../code/http/httpconn.cpp
+                                    ../../code/http/httprequest.cpp
+                                    ../../code/pool/sqlconnpool.cpp
+                                    ../../code/http/httpresponse.cpp
+                                    ../../code/buffer/buffer.cpp
+                                    ../../code/log/log.cpp
+                                    httpconn_server.cpp)
+add_executable(HttpConnServerTest ${HTTP_CONN_SERVER_SOURCE_FILES})
+target_include_directories(HttpConnServerTest PUBLIC ${PROJECT_SOURCE_DIR}../code)
+target_link_libraries(HttpConnServerTest pthread mysqlclient)
