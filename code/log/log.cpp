@@ -3,7 +3,8 @@
 log::log(){
     line_cnt = 0;
     is_async = false;
-    is_open = true;
+    //BUG:  这里默认初始应该为false不打开
+    is_open = false;
 
     deque = nullptr;
     write_thread = nullptr;
@@ -71,6 +72,8 @@ void log::flush(){
 
 void log::init(const char* path, const char* suffix,
                 int max_queue_capacity, const int max_lines){
+    //BUG:  这里init的时候再设置为true
+    is_open = true;
     if (max_queue_capacity > 0){
         is_async = true;
         deque = std::make_unique<block_queue<std::string>>(max_queue_capacity);
