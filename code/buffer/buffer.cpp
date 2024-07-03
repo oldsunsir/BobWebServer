@@ -36,7 +36,11 @@ void buffer::retrieve(size_t len){
 }
 
 void buffer::retrieveUntil(const char* end){
-    if (peek() < end)
+    if (peek() < end){
+        if (end - peek() > readableBytes())
+        //TODO:BUG:
+        fprintf(stderr, "在这里出错 end - peek() = %d, readable = %d, readpos:%d", end-peek(), readableBytes(), read_pos);
+    }
         retrieve(end - peek());
 }
 void buffer::retrieveAll(){
