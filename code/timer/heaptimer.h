@@ -16,6 +16,10 @@
 
 struct client_data;
 class timer_node;
+/*NOTE: 这里一开始没有设计好, 不然是不需要client_data的
+        直接用http_conn存储fd和address即可, 
+        目前处理方式是直接再加一个http_conn成员*/
+class http_conn;
 
 /*  NOTE:应该用shared_ptr, 比如client_data中有一份timer_node_ptr
                 timer_heap的array中也有一份
@@ -34,6 +38,13 @@ struct client_data{
     sockaddr_in address;
     int sockfd;
     timer_node_weak_ptr timer;
+    //补充
+    // http_conn* conn;
+    std::shared_ptr<http_conn> conn_ptr;
+
+    ~client_data(){
+        LOG_INFO("开始析构client_data [%d], port:%d", sockfd, address.sin_port)
+    }
 };
 
 class timer_node{
@@ -70,7 +81,8 @@ public:
     void pop_timer();
     /*  心搏函数    */
     void tick();
-
+    /*  获取下一个最近的等待时间*/
+    int getNextTick();
     bool empty() const{
         return cur_size == 0;
     }
