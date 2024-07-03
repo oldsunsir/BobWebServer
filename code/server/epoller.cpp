@@ -1,4 +1,7 @@
 #include "epoller.h"
+#include <cerrno>
+#include <stdio.h>
+#include <cstring>
 using std::vector;
 
 epoller::epoller(int max_events) : _events(max_events){
@@ -16,7 +19,13 @@ bool epoller::addFd(int fd, uint32_t event){
     epoll_event tmp_ev{0};
     tmp_ev.data.fd = fd;
     tmp_ev.events = event;
-    return 0 == epoll_ctl(epoll_fd, EPOLL_CTL_ADD, fd, &tmp_ev);
+    //BUG:  为什么这里有的时候报错 invalid argument?    已解决, 转webserver.cpp:10
+    if (epoll_ctl(epoll_fd, EPOLL_CTL_ADD, fd, &tmp_ev) != 0){
+        /*TODO:BUG: epoll_ctl failed: Bad file descriptor*/
+        fprintf(stderr, "epoll_ctl failed: %s\n", strerror(errno));
+        return false;
+    }
+    return true;
 }
 
 bool epoller::modFd(int fd, uint32_t event){
