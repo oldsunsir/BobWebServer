@@ -68,6 +68,17 @@ void timer_heap::tick(){
     }
 }
 
+int timer_heap::getNextTick(){
+    int res = -1;
+    tick();
+    if (!empty()){
+        res = std::chrono::duration_cast<ms>(array.front()->expires - timer_clock::now()).count();
+        if (res < 0)
+            res = 0;
+    }
+    return res;
+}
+
 void timer_heap::percolate_down(int hole){
     timer_node_ptr tmp = array[hole];
     int child = 0;
