@@ -28,6 +28,9 @@ public:
         return _request.isKeepAlive();
     }
     
+    size_t toWriteBytes() const{
+        return iov[0].iov_len + iov[1].iov_len;
+    }
     static bool is_et;
     static const char* src_dir;
     /*NOTE: 多个线程进行http连接, 需要原子操作*/
