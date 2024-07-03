@@ -1,0 +1,3 @@
+/home/bobsun/school/linux服务器编程学习/BobWebServer/build/CMakeFiles/Server.dir
+/home/bobsun/school/linux服务器编程学习/BobWebServer/build/CMakeFiles/edit_cache.dir
+/home/bobsun/school/linux服务器编程学习/BobWebServer/build/CMakeFiles/rebuild_cache.dir
