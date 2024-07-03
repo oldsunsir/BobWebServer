@@ -49,7 +49,7 @@ make
 * LOG添加级别设置, 在只需要输出info时不打印其他信息, 去除冗余日志
 * 高并发下仍有逻辑bug, dmesg查看段错误显示访问了不存在的地址, 问题发生在解析http_request请求,
     未解析完但read_buff已被清空, 应该是并发时访问变量冲突导致
-
+* 阅读module, 参考优化Reactor模型
 ## 致谢
 Linux高性能服务器编程，游双著.
 [markparticle](https://github.com/markparticle/WebServer)
