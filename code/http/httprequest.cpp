@@ -83,12 +83,19 @@ bool http_request::parse(buffer& buff){
                 break;
         }
         /*NOTE: 如果未找到CRLF*/
-        if (line_end == buff.beginWrite()){
+        /*BUG:  POST中请求体是不一定以\r\n结尾的, 所以直接只通过
+                line_end == buff.beginWrite() 来判断是不对的*/
+        if (line_end == buff.beginWrite() && (state != FINISH)){
             LOG_ERROR("HTTP REQUEST PARSE ERROR!")
             return false;
             break;
         }
-        buff.retrieveUntil(line_end+2);
+        else if (line_end == buff.beginWrite()){
+            buff.retrieveAll();
+        }
+        else{
+            buff.retrieveUntil(line_end+2);
+        }
     }
     LOG_DEBUG("[%s], [%s], [%s]", _method.c_str(), _path.c_str(), _version.c_str())
     return true;
@@ -202,7 +209,9 @@ void http_request::parseFromUrlEncoded(){
 bool http_request::userVerify(const std::string& name, const std::string& pwd, bool isLogin){
     LOG_INFO("Verify name:%s pwd:%s", name.c_str(), pwd.c_str())
     MYSQL* sql = nullptr;
-    conn_RAII(&sql, sql_pool::instance());
+    //BUG:  一开始这里写法是conn_RAII (&sql, sql_pool::instance());
+    /*  显然不对, 这个表达式结束就直接析构, conn返回, 这可能会导致多个用户用一个conn连接*/
+    conn_RAII conn_raii(&sql, sql_pool::instance());
     assert(sql);
 
     bool flag = false;
@@ -253,6 +262,7 @@ bool http_request::userVerify(const std::string& name, const std::string& pwd, b
         if (mysql_query(sql, order)){
             LOG_ERROR("Insert error")
             flag = false;
+            return flag;
         }
         flag = true;
     }
