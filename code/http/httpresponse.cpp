@@ -80,6 +80,8 @@ void http_response::makeResponse(buffer& buff){
         _code = 403;
     else
         _code = 200;
+    LOG_DEBUG("Http Response Code: %d", _code)
+    LOG_DEBUG("Http Response Path : %s", (_src_dir + _path).data())
     errorHtml();
     addStateLine(buff);
     addHeader(buff);
@@ -133,7 +135,7 @@ void http_response::addContent(buffer& buff){
     if (mm_ret == MAP_FAILED){
         addErrorContent(buff, "File Open Failed!");
     }
-    mm_file = static_cast<char*>(mm_ret);
+    mm_file = (char*)mm_ret;
     close(src_fd);
     /*NOTE: 这里有个空行, 所以是两个\r\n*/
     buff.append("Content-length: " + to_string(mm_file_stat.st_size) + "\r\n\r\n");
